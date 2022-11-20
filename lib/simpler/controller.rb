@@ -51,5 +51,9 @@ module Simpler
       @request.env['simpler.format'] = template if template.is_a?(Hash)
     end
 
+    def status(status)
+      @response.status = status
+    end
+
   end
 end
