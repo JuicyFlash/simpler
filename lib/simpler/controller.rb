@@ -14,6 +14,7 @@ module Simpler
     def make_response(action)
       @request.env['simpler.controller'] = self
       @request.env['simpler.action'] = action
+      @request.env['simpler.status'] = 200
 
       set_default_headers
       send(action)
@@ -22,10 +23,23 @@ module Simpler
       @response.finish
     end
 
+    def make_404_response
+      set_404_headers
+      @request.env['simpler.status'] = 404
+      @request.env['simpler.template'] = '404'
+      @response.status = 404
+      write_response
+      @response.finish
+    end
+
     private
 
     def extract_name
       self.class.name.match('(?<name>.+)Controller')[:name].downcase
+    end
+
+    def set_404_headers
+      set_default_headers
     end
 
     def set_default_headers
