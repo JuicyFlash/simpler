@@ -10,9 +10,10 @@ module Simpler
     end
 
     def render(binding)
-      template = File.read(template_path)
+      return @env['simpler.format'][:plain] unless @env['simpler.format'].nil?
 
-      ERB.new(template).result(binding)
+      template = File.read(template_path)
+       ERB.new(template).result(binding)
     end
 
     private

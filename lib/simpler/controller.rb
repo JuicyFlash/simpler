@@ -48,6 +48,7 @@ module Simpler
 
     def render(template)
       @request.env['simpler.template'] = template
+      @request.env['simpler.format'] = template if template.is_a?(Hash)
     end
 
   end
