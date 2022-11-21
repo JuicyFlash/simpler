@@ -1,7 +1,8 @@
 class TestsController < Simpler::Controller
 
   def index
-    render plain: "SomeText #{Time.now}"
+    headers['Content-Type'] = 'text/plain'
+    # render plain: "SomeText #{Time.now}"
   end
 
   def create; end
