@@ -15,6 +15,7 @@ module Simpler
       @request.env['simpler.controller'] = self
       @request.env['simpler.action'] = action
       @request.env['simpler.status'] = 200
+      @request.env['simpler.handler'] = "#{name}##{action}"
 
       set_default_headers
       send(action)
@@ -27,6 +28,7 @@ module Simpler
       set_404_headers
       @request.env['simpler.status'] = 404
       @request.env['simpler.template'] = '404'
+      @request.env['simpler.handler'] = 'Not found'
       @response.status = 404
       write_response
       @response.finish
