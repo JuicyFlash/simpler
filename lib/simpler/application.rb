@@ -28,10 +28,15 @@ module Simpler
 
     def call(env)
       route = @router.route_for(env)
-      controller = route.controller.new(env)
-      action = route.action
-
-      make_response(controller, action)
+      if route.nil?
+        controller = Controller.new(env)
+        controller.make_404_response
+      else
+        controller = route.controller.new(env)
+        action = route.action
+        params = { route.parameter => @router.value_for(env, route) } unless route.parameter.empty?
+        make_response(controller, action, params)
+      end
     end
 
     private
@@ -50,8 +55,8 @@ module Simpler
       @db = Sequel.connect(database_config)
     end
 
-    def make_response(controller, action)
-      controller.make_response(action)
+    def make_response(controller, action, params = {})
+      controller.make_response(action, params)
     end
 
   end
