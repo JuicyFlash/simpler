@@ -4,6 +4,11 @@ class TestsController < Simpler::Controller
     #render plain: "SomeText #{Time.now}"
   end
 
+  def show
+    @params = params
+    render plain: "SomeText #{@params}"
+  end
+
   def create; end
 
 end

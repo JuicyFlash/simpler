@@ -13,9 +13,9 @@ class Runtime
 
     request = "Request: #{env['REQUEST_METHOD']} #{env['REQUEST_URI']}"
     handler = "Handler: #{env['simpler.handler']}"
-    parameters = "Parameters: {'category' => 'Backend'}"
+    parameters = "Parameters: #{env['simpler.params']}"
     response = "Response: #{status} [#{headers['Content-Type']}] #{env['simpler.template_path']}"
-    @logger.log([request,handler,parameters,response])
+    @logger.log([request, handler, parameters, response])
     [status, headers, body]
   end
 end

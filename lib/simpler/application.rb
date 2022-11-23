@@ -34,7 +34,8 @@ module Simpler
       else
         controller = route.controller.new(env)
         action = route.action
-        make_response(controller, action)
+        params = { route.parameter => @router.value_for(env, route) } unless route.parameter.empty?
+        make_response(controller, action, params)
       end
     end
 
@@ -54,8 +55,8 @@ module Simpler
       @db = Sequel.connect(database_config)
     end
 
-    def make_response(controller, action)
-      controller.make_response(action)
+    def make_response(controller, action, params = {})
+      controller.make_response(action, params)
     end
 
   end

@@ -22,12 +22,20 @@ module Simpler
       @routes.find { |route| route.match?(method, path) }
     end
 
+    def value_for(env, route)
+      return env['PATH_INFO'].gsub("#{route.path}/", '') unless route.parameter.empty?
+
+      nil
+    end
+
     private
 
     def add_route(method, path, route_point)
       route_point = route_point.split('#')
       controller = controller_from_string(route_point[0])
       action = route_point[1]
+      # parameter = path.match(':[a-zA-Z]+').to_s
+      # path = path.gsub("/#{parameter}", '') unless parameter.empty?
       route = Route.new(method, path, controller, action)
 
       @routes.push(route)
